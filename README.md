@@ -1,2 +1,12 @@
-# progress-tracker
-A personal productivity dashboard to track daily tasks, learning hours, and progress. Includes progress visualization and localStorage support for saving user data. Built with HTML, CSS, and JavaScript.
+# Progress Tracker
+
+A personal productivity dashboard to track daily tasks, learning hours, and progress.
+
+## Features
+- Task management
+- Learning hours tracker
+- Progress visualization
+- Data saved using localStorage
+
+## Built With
+HTML, CSS, JavaScript
