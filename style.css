@@ -1,0 +1,458 @@
+/* =============================================
+   CSS VARIABLES — light theme (default)
+============================================= */
+:root {
+  --bg:          #F5F0E8;
+  --surface:     #FDFAF4;
+  --surface2:    #F2EDE4;
+  --ink:         #1A1714;
+  --ink-soft:    #7A6F63;
+  --accent:      #C0531A;
+  --accent-lt:   #F0DDD1;
+  --green:       #2E7D54;
+  --green-lt:    #D4EDE0;
+  --blue:        #1D5FA8;
+  --blue-lt:     #D4E5F7;
+  --gold:        #B07D10;
+  --gold-lt:     #FBF0D0;
+  --border:      #DDD5C8;
+  --shadow:      0 2px 20px rgba(26,23,20,.09);
+  --radius:      16px;
+  --radius-sm:   10px;
+  --transition:  background .25s, color .25s, border-color .25s;
+}
+
+/* =============================================
+   DARK THEME — applied to [data-theme="dark"]
+============================================= */
+[data-theme="dark"] {
+  --bg:          #151210;
+  --surface:     #1E1A17;
+  --surface2:    #242018;
+  --ink:         #F0EAE0;
+  --ink-soft:    #8A7E72;
+  --accent:      #E06830;
+  --accent-lt:   #3A2015;
+  --green:       #3DAD70;
+  --green-lt:    #0F2E1E;
+  --blue:        #4A90D9;
+  --blue-lt:     #0D2035;
+  --gold:        #D4A020;
+  --gold-lt:     #2A1E05;
+  --border:      #302820;
+  --shadow:      0 2px 24px rgba(0,0,0,.35);
+}
+
+/* =============================================
+   RESET
+============================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Mono', monospace;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 16px 80px;
+  transition: var(--transition);
+}
+
+/* =============================================
+   HEADER
+============================================= */
+header {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+  gap: 12px;
+}
+.header-text { text-align: left; }
+.date-label {
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  line-height: 1.1;
+  letter-spacing: -.01em;
+}
+h1 em { font-style: italic; color: var(--accent); }
+
+/* Dark-mode toggle button */
+.theme-toggle {
+  flex-shrink: 0;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 7px 14px 7px 10px;
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-soft);
+  transition: var(--transition), transform .12s;
+  white-space: nowrap;
+  box-shadow: var(--shadow);
+}
+.theme-toggle:hover  { color: var(--ink); }
+.theme-toggle:active { transform: scale(.96); }
+
+/* Animated sun/moon icon track */
+.toggle-track {
+  width: 32px; height: 18px;
+  background: var(--border);
+  border-radius: 99px;
+  position: relative;
+  transition: background .3s;
+  flex-shrink: 0;
+}
+[data-theme="dark"] .toggle-track { background: var(--accent); }
+.toggle-thumb {
+  width: 13px; height: 13px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 2.5px; left: 2.5px;
+  transition: left .25s cubic-bezier(.4,0,.2,1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px;
+}
+[data-theme="dark"] .toggle-thumb { left: 16.5px; }
+
+/* =============================================
+   GRID LAYOUT
+============================================= */
+.layout {
+  width: 100%;
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+@media (max-width: 640px) {
+  .layout { grid-template-columns: 1fr; }
+  header { flex-direction: column-reverse; align-items: flex-start; }
+}
+
+/* =============================================
+   SHARED CARD
+============================================= */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px;
+  transition: var(--transition);
+}
+.card-title {
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.card-title::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+/* =============================================
+   DASHBOARD CARD  (full-width, top)
+============================================= */
+.dashboard-card { grid-column: 1 / -1; }
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+@media (max-width: 480px) {
+  .dash-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.dash-stat {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: var(--transition);
+}
+.dash-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+}
+.dash-icon.green-bg  { background: var(--green-lt); }
+.dash-icon.gold-bg   { background: var(--gold-lt); }
+.dash-icon.blue-bg   { background: var(--blue-lt); }
+
+.dash-val {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: var(--ink);
+}
+.dash-val.green { color: var(--green); }
+.dash-val.gold  { color: var(--gold); }
+.dash-val.blue  { color: var(--blue); }
+.dash-lbl {
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+/* Streak flame animation */
+@keyframes flicker {
+  0%,100% { transform: scale(1) rotate(-2deg); }
+  50%      { transform: scale(1.15) rotate(2deg); }
+}
+.dash-icon.streak-active { animation: flicker 1.4s ease-in-out infinite; }
+
+/* =============================================
+   DONUT CHART CARD
+============================================= */
+.chart-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pie-wrap {
+  position: relative;
+  width: 158px; height: 158px;
+  margin: 0 auto 18px;
+}
+.pie-wrap svg { width: 158px; height: 158px; transform: rotate(-90deg); }
+
+/* r=40 → circumference ≈ 251.3 */
+.pie-bg   { fill: none; stroke: var(--accent-lt); stroke-width: 20; transition: stroke .3s; }
+.pie-done { fill: none; stroke: var(--green);     stroke-width: 20;
+            stroke-linecap: round;
+            transition: stroke-dashoffset .65s cubic-bezier(.4,0,.2,1); }
+
+.pie-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  pointer-events: none;
+}
+.pie-pct {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2rem; line-height: 1;
+  color: var(--ink);
+  transition: color .4s;
+}
+.pie-pct.done { color: var(--green); }
+.pie-sub { font-size: 10px; color: var(--ink-soft); letter-spacing: .06em; margin-top: 4px; }
+
+.pie-legend { display: flex; gap: 16px; font-size: 11px; color: var(--ink-soft); }
+.legend-pill { display: flex; align-items: center; gap: 6px; }
+.legend-dot  { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+.motivation {
+  width: 100%; font-size: 12px; text-align: center;
+  color: var(--green); background: var(--green-lt);
+  border-radius: 8px; padding: 10px 14px; margin-top: 16px;
+  display: none; animation: fadeSlide .4s ease;
+  transition: var(--transition);
+}
+.motivation.visible { display: block; }
+
+@keyframes fadeSlide {
+  from { opacity:0; transform: translateY(-6px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* =============================================
+   TASK CARD
+============================================= */
+.input-row { display: flex; gap: 8px; margin-bottom: 16px; }
+
+.task-input {
+  flex: 1;
+  font-family: 'DM Mono', monospace; font-size: 13px;
+  padding: 10px 13px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--bg); color: var(--ink);
+  outline: none; transition: var(--transition);
+}
+.task-input::placeholder { color: var(--ink-soft); }
+.task-input:focus { border-color: var(--accent); }
+
+.add-btn {
+  font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500;
+  padding: 10px 16px; background: var(--accent); color: #fff;
+  border: none; border-radius: var(--radius-sm); cursor: pointer;
+  white-space: nowrap; transition: background .2s, transform .12s;
+}
+.add-btn:hover  { background: #A84516; }
+.add-btn:active { transform: scale(.97); }
+
+.task-list {
+  list-style: none; display: flex; flex-direction: column; gap: 8px;
+  max-height: 380px; overflow-y: auto; padding-right: 2px;
+}
+.task-list::-webkit-scrollbar { width: 4px; }
+.task-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+.empty-state {
+  text-align: center; padding: 28px 0;
+  color: var(--ink-soft); font-size: 12px; line-height: 2;
+}
+.empty-state .empty-icon { display: block; font-size: 1.8rem; margin-bottom: 4px; }
+
+.task-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 13px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: var(--transition), opacity .3s;
+  animation: itemIn .22s ease;
+}
+@keyframes itemIn {
+  from { opacity:0; transform: translateY(7px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+.task-item.completed { background: var(--green-lt); border-color: transparent; opacity: .75; }
+
+.task-check {
+  appearance: none; -webkit-appearance: none;
+  width: 18px; height: 18px; min-width: 18px;
+  border: 2px solid var(--border); border-radius: 5px;
+  cursor: pointer; position: relative; flex-shrink: 0;
+  transition: background .2s, border-color .2s;
+}
+.task-check:checked { background: var(--green); border-color: var(--green); }
+.task-check:checked::after {
+  content: ''; position: absolute;
+  left: 3px; top: 0; width: 5px; height: 9px;
+  border: 2px solid #fff; border-top: none; border-left: none;
+  transform: rotate(45deg);
+}
+
+.task-body  { flex: 1; min-width: 0; }
+.task-text  { font-size: 13px; line-height: 1.35; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.task-item.completed .task-text { text-decoration: line-through; color: var(--ink-soft); }
+
+.task-mini-bar-wrap { margin-top: 5px; height: 3px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.task-mini-bar { height: 100%; border-radius: 99px; background: var(--accent); transition: width .5s ease, background .3s; }
+.task-item.completed .task-mini-bar { background: var(--green); width: 100% !important; }
+
+.task-badge {
+  font-size: 9px; letter-spacing: .08em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 99px; white-space: nowrap; flex-shrink: 0;
+}
+.badge-pending { background: var(--accent-lt); color: var(--accent); }
+.badge-done    { background: var(--green-lt);  color: var(--green); }
+
+.delete-btn {
+  background: none; border: none; cursor: pointer;
+  color: var(--border); font-size: 15px; padding: 3px 5px;
+  border-radius: 4px; transition: color .2s; flex-shrink: 0; line-height: 1;
+}
+.delete-btn:hover { color: var(--accent); }
+
+/* =============================================
+   LEARNING HOURS CARD  (full-width)
+============================================= */
+.hours-card { grid-column: 1 / -1; }
+
+.hours-top {
+  display: flex; gap: 16px; align-items: flex-end;
+  flex-wrap: wrap; margin-bottom: 22px;
+}
+.hours-input-block { flex: 1; min-width: 200px; }
+.hours-input-label {
+  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-soft); margin-bottom: 8px;
+}
+.hours-input-row { display: flex; gap: 8px; }
+
+.hours-input {
+  width: 110px; font-family: 'DM Mono', monospace; font-size: 13px;
+  padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--bg); color: var(--ink); outline: none; transition: var(--transition);
+}
+.hours-input:focus { border-color: var(--blue); }
+.hours-input::placeholder { color: var(--ink-soft); }
+
+.hours-btn {
+  font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500;
+  padding: 10px 16px; background: var(--blue); color: #fff;
+  border: none; border-radius: var(--radius-sm); cursor: pointer;
+  transition: background .2s, transform .12s;
+}
+.hours-btn:hover  { background: #174F8E; }
+.hours-btn:active { transform: scale(.97); }
+
+.stat-pills { display: flex; gap: 10px; flex-wrap: wrap; }
+.stat-pill {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 10px 18px;
+  text-align: center; min-width: 88px; transition: var(--transition);
+}
+.pill-val { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--blue); line-height: 1; }
+.pill-val.today-val { color: var(--accent); }
+.pill-lbl { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin-top: 4px; }
+
+.week-chart-label {
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-soft); margin-bottom: 12px;
+}
+.week-chart {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 8px; align-items: end; height: 100px;
+}
+.day-col {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: flex-end; gap: 5px; height: 100%;
+}
+.day-hrs-label { font-size: 10px; color: var(--ink-soft); min-height: 14px; line-height: 1; }
+.day-col.today .day-hrs-label { color: var(--accent); }
+
+.day-bar-outer {
+  width: 100%; background: var(--blue-lt); border-radius: 6px 6px 3px 3px;
+  overflow: hidden; min-height: 5px; display: flex; flex-direction: column;
+  justify-content: flex-end; transition: background .3s;
+}
+.day-col.today .day-bar-outer { background: var(--accent-lt); }
+.day-bar-fill { background: var(--blue); border-radius: 6px 6px 0 0; width: 100%; transition: height .55s cubic-bezier(.4,0,.2,1), background .3s; }
+.day-col.today .day-bar-fill { background: var(--accent); }
+.day-name { font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+.day-col.today .day-name { color: var(--accent); font-weight: 500; }
+
+/* =============================================
+   FOOTER
+============================================= */
+footer {
+  margin-top: 28px; font-size: 11px; color: var(--ink-soft);
+  letter-spacing: .06em; text-align: center; transition: color .25s;
+}

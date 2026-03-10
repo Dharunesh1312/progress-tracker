@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Progress Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="header-text">
+      <p class="date-label" id="dateLabel"></p>
+      <h1>Your <em>daily</em> progress tracker</h1>
+    </div>
+
+    <!-- Dark mode toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+      <div class="toggle-track">
+        <div class="toggle-thumb" id="toggleThumb">☀️</div>
+      </div>
+      <span id="themeLabel">Light</span>
+    </button>
+  </header>
+
+  <!-- ===== GRID ===== -->
+  <div class="layout">
+
+    <!-- ── DASHBOARD STATS  (full-width top row) ── -->
+    <div class="card dashboard-card" aria-label="Dashboard statistics">
+      <p class="card-title">Dashboard</p>
+      <div class="dash-grid">
+
+        <div class="dash-stat">
+          <div class="dash-icon green-bg">✅</div>
+          <div class="dash-info">
+            <div class="dash-val green" id="dashToday">0</div>
+            <div class="dash-lbl">Completed today</div>
+          </div>
+        </div>
+
+        <div class="dash-stat">
+          <div class="dash-icon gold-bg" id="streakIcon">🔥</div>
+          <div class="dash-info">
+            <div class="dash-val gold" id="dashStreak">0</div>
+            <div class="dash-lbl">Day streak</div>
+          </div>
+        </div>
+
+        <div class="dash-stat">
+          <div class="dash-icon blue-bg">🏅</div>
+          <div class="dash-info">
+            <div class="dash-val blue" id="dashTotal">0</div>
+            <div class="dash-lbl">Total completed</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── LEFT: DONUT CHART ── -->
+    <div class="card chart-card" aria-label="Task completion overview">
+      <p class="card-title">Task completion</p>
+
+      <!--
+        SVG Donut chart.  r=40 → circumference = 2π×40 ≈ 251.3
+        Rotated -90° so the arc starts at the top.
+      -->
+      <div class="pie-wrap" role="img" aria-label="Donut chart of task completion">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <circle class="pie-bg"   cx="50" cy="50" r="40"/>
+          <circle class="pie-done" cx="50" cy="50" r="40"
+            id="pieDone" stroke-dasharray="251.3" stroke-dashoffset="251.3"/>
+        </svg>
+        <div class="pie-center">
+          <span class="pie-pct" id="piePct">0%</span>
+          <span class="pie-sub" id="pieSub">0 / 0 tasks</span>
+        </div>
+      </div>
+
+      <div class="pie-legend">
+        <div class="legend-pill">
+          <div class="legend-dot" style="background:var(--green)"></div>
+          <span>Done</span>
+        </div>
+        <div class="legend-pill">
+          <div class="legend-dot" style="background:var(--accent-lt);outline:1px solid var(--border)"></div>
+          <span>Pending</span>
+        </div>
+      </div>
+
+      <div class="motivation" id="motivationBanner" role="status" aria-live="polite"></div>
+    </div>
+
+    <!-- ── RIGHT: TASK LIST ── -->
+    <div class="card">
+      <p class="card-title">Today's tasks</p>
+
+      <div class="input-row">
+        <input type="text" class="task-input" id="taskInput"
+          placeholder="Add a task…" maxlength="100" aria-label="New task"/>
+        <button class="add-btn" id="addBtn">+ Add</button>
+      </div>
+
+      <ul class="task-list" id="taskList" aria-label="Task list"></ul>
+    </div>
+
+    <!-- ── BOTTOM: LEARNING HOURS (full-width) ── -->
+    <div class="card hours-card">
+      <p class="card-title">Learning hours tracker</p>
+
+      <div class="hours-top">
+        <div class="hours-input-block">
+          <p class="hours-input-label">Hours spent learning today</p>
+          <div class="hours-input-row">
+            <input type="number" class="hours-input" id="hoursInput"
+              placeholder="e.g. 2.5" min="0" max="24" step="0.25"
+              aria-label="Hours spent learning today"/>
+            <button class="hours-btn" id="hoursBtn">Save</button>
+          </div>
+        </div>
+
+        <div class="stat-pills">
+          <div class="stat-pill">
+            <div class="pill-val today-val" id="todayHoursVal">0h</div>
+            <div class="pill-lbl">Today</div>
+          </div>
+          <div class="stat-pill">
+            <div class="pill-val" id="weekHoursVal">0h</div>
+            <div class="pill-lbl">This week</div>
+          </div>
+          <div class="stat-pill">
+            <div class="pill-val" id="avgHoursVal">0h</div>
+            <div class="pill-lbl">Daily avg</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="week-chart-label">This week at a glance</p>
+      <div class="week-chart" id="weekChart" aria-label="Weekly learning hours bar chart"></div>
+    </div>
+
+  </div><!-- /.layout -->
+
+  <footer>All data saved locally in your browser · no account needed</footer>
+
+  <!-- Script loaded at end of body so all DOM elements exist when it runs -->
+  <script src="script.js"></script>
+</body>
+</html>
