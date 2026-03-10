@@ -10,3 +10,6 @@ A personal productivity dashboard to track daily tasks, learning hours, and prog
 
 ## Built With
 HTML, CSS, JavaScript
+
+## Live Demo
+https://dharunesh1312.github.io/progress-tracker/
